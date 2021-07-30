@@ -89,6 +89,20 @@ app
         }
       }
     );
+  })
+
+  .patch(function (req, res) {
+    Article.update(
+      { title: req.params.articleTitle },
+      { $set: req.body },
+      function (err) {
+        if (!err) {
+          res.send('Successfullt updated article');
+        } else {
+          res.send(err);
+        }
+      }
+    );
   });
 
 app.listen(port, function () {
