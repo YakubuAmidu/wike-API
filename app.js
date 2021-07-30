@@ -66,7 +66,15 @@ app
 app
   .route('/articles/articleTitle')
   .get(function (req, res) {
-    console.log('Article id');
+    const ArticleTitle = req.params.articleTitle;
+
+    Article.findOne({ title: ArticleTitle }, function (err, foundArticle) {
+      if (!err) {
+        res.send(foundArticle);
+      } else {
+        res.send('No article matching that title was found!');
+      }
+    });
   })
   .post(function (req, res) {
     console.log('Articles id');
