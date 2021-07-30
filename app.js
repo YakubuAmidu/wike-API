@@ -63,25 +63,18 @@ app
 
 //////////////////////Request targeting a specific articles////////////////////////
 
-app
-  .route('/articles/articleTitle')
-  .get(function (req, res) {
-    const ArticleTitle = req.params.articleTitle;
-
-    Article.findOne({ title: ArticleTitle }, function (err, foundArticle) {
-      if (!err) {
+app.route('/articles/:articleTitle').get(function (req, res) {
+  Article.findOne(
+    { title: req.params.articleTitle },
+    function (err, foundArticle) {
+      if (foundArticle) {
         res.send(foundArticle);
       } else {
         res.send('No article matching that title was found!');
       }
-    });
-  })
-  .post(function (req, res) {
-    console.log('Articles id');
-  })
-  .delete(function (req, res) {
-    console.log('Article id');
-  });
+    }
+  );
+});
 
 app.listen(port, function () {
   console.log(`Sever started on port ${port}`);
