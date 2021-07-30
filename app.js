@@ -24,8 +24,10 @@ const articleSchema = {
 
 const Article = mongoose.model('Article', articleSchema);
 
+//////////////////////Request targeting all articles//////////////////////////
+
 app
-  .route('articles')
+  .route('/articles')
   .get(function (req, res) {
     Article.find(function (err, foundArticles) {
       if (!err) {
@@ -57,6 +59,20 @@ app
         res.send(err);
       }
     });
+  });
+
+//////////////////////Request targeting a specific articles////////////////////////
+
+app
+  .route('/articles/articleTitle')
+  .get(function (req, res) {
+    console.log('Article id');
+  })
+  .post(function (req, res) {
+    console.log('Articles id');
+  })
+  .delete(function (req, res) {
+    console.log('Article id');
   });
 
 app.listen(port, function () {
