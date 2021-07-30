@@ -63,18 +63,33 @@ app
 
 //////////////////////Request targeting a specific articles////////////////////////
 
-app.route('/articles/:articleTitle').get(function (req, res) {
-  Article.findOne(
-    { title: req.params.articleTitle },
-    function (err, foundArticle) {
-      if (foundArticle) {
-        res.send(foundArticle);
-      } else {
-        res.send('No article matching that title was found!');
+app
+  .route('/articles/:articleTitle')
+  .get(function (req, res) {
+    Article.findOne(
+      { title: req.params.articleTitle },
+      function (err, foundArticle) {
+        if (foundArticle) {
+          res.send(foundArticle);
+        } else {
+          res.send('No article matching that title was found!');
+        }
       }
-    }
-  );
-});
+    );
+  })
+
+  .put(function (req, res) {
+    Article.update(
+      { title: req.params.articleTitle },
+      { title: req.body.title, content: req.body.content },
+      { overwrite: true },
+      function (err) {
+        if (!err) {
+          res.send('Successfully update article');
+        }
+      }
+    );
+  });
 
 app.listen(port, function () {
   console.log(`Sever started on port ${port}`);
